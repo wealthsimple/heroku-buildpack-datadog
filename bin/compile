@@ -55,10 +55,9 @@ topic "What's in the dir????"
 ls -thal $APT_CACHE_DIR/archives/*.deb | indent
 
 topic "Fetching deb packages"
-for DEB in $(ls -1 $APT_CACHE_DIR/archives/*.deb); do
-  topic "Installing $(basename $DEB)"
-  dpkg -x $DEB $BUILD_DIR/.apt/
-done
+DEB=$(ls -t $APT_CACHE_DIR/archives/*.deb | head -n 1)
+topic "Installing $(basename $DEB)"
+dpkg -x $DEB $BUILD_DIR/.apt/
 
 mv $DD_AGENT_ROOT/etc/dd-agent/datadog.conf.example $DD_AGENT_CONF
 
